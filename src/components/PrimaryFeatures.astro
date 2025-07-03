@@ -13,7 +13,6 @@ const features = [
       'Install the CodeInbox CLI with Homebrew',
     app: 'shell',
     code: '$ brew install codeinbox/homebrew-tap/codeinbox',
-    icon: 'DeviceUserIcon',
     step: 1,
   },
   {
@@ -22,15 +21,29 @@ const features = [
       'Login only needs to happen once.',
     app: 'shell',
     code: '$ codeinbox login {email}',
-    icon: 'DeviceTouchIcon',
     step: 2,
   },
   {
-    name: '3. Register',
+    name: '3. Setup Channels',
+    description: 'Connect Slack using your setup URL',
+    app: 'shell',
+    code: ['$ codeinbox channels setup',
+      '',
+      '# Follow the link and click "Enable"',
+      '# to authenticate with Slack.'
+    ].join('\n'),
+  },
+  {
+    name: '4. Register',
     description: 'Register the Notification hook in Claude',
     app: 'claude',
-    code: `enter: /hooks\nselect: Notifications\nselect: Add new hook\npaste: 'codeinbox hook claude notification'`,
-    icon: 'DeviceNotificationIcon',
+    code: [
+      '$ claude',
+      '❯ /hooks',
+      '│ ❯ 3. Notification - When notifications…',
+      '❯ 1. + Add new hook…',
+      'codeinbox hook claude notification',
+    ].join('\n'),
     step: 3,
   },
 ];
@@ -110,7 +123,7 @@ const touchIconGradientId = `device-touch-gradient-${Math.random().toString(36).
         How It Works.
       </h2>
       <p class="mt-2 text-lg text-gray-400">
-        Get set up in minutes. Start getting Claude notifications where you actually see them.
+        Get set up in minutes. Start getting Claude notifications where you won't miss them.
       </p>
     </div>
   </Container>
