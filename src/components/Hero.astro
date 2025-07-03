@@ -100,9 +100,9 @@ const notifications = [
                 </div>
               </div>
 
-              <div id="phone-notifications" class="px-2">
-                {notifications.map((noti) => (
-                  <div class="flex flex-row p-4 text-white font-normal">
+              <div id="phone-notifications" class="px-2 relative">
+                {notifications.map((noti, index) => (
+                  <div class="notification flex flex-row p-4 text-white font-normal absolute w-full" style={index > 0 ? "display: none;" : ""}>
                     <img src={`/images/logos/${noti.channel.toLowerCase()}.svg`} class="w-8 h-8" />
                     <div class="flex flex-col ml-4">
                       <div class="font-bold">{noti.channel}<span class="ml-2 opacity-75 text-xs font-normal">now</span></div>
@@ -146,4 +146,106 @@ const notifications = [
       transform: rotate(-360deg);
     }
   }
+
+  /* Notification animation styles */
+  #phone-notifications {
+    min-height: 140px;
+    overflow: hidden;
+  }
+
+  .notification {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0;
+    transform: translateY(100%); /* Start from bottom */
+    left: 0;
+    right: 0;
+  }
+
+  .notification.active {
+    opacity: 1;
+    transform: translateY(0); /* Centered position */
+  }
+
+  .notification.slide-out {
+    opacity: 0;
+    transform: translateY(-20%) scale(0.9);
+  }
 </style>
+
+<script>
+  // Function to animate notifications
+  function animateNotifications() {
+    const notifications = document.querySelectorAll<HTMLDivElement>('#phone-notifications .notification');
+    if (notifications.length === 0) return;
+
+    let currentIndex = 0;
+
+    // Show the first notification initially
+    notifications[0].classList.add('active');
+
+    // Function to rotate to the next notification
+    function rotateNotifications() {
+      // Calculate next index
+      const nextIndex = (currentIndex + 1) % notifications.length;
+
+      // Add slide-out class to current notification
+      notifications[currentIndex].classList.remove('active');
+      notifications[currentIndex].classList.add('slide-out');
+
+      // Show next notification immediately
+      notifications[nextIndex].style.display = 'flex';
+
+      // Small delay before adding active class for animation
+      setTimeout(() => {
+        notifications[nextIndex].classList.add('active');
+      }, 50);
+
+      // After animation completes, hide the old notification and update current index
+      setTimeout(() => {
+        notifications[currentIndex].classList.remove('slide-out');
+        notifications[currentIndex].style.display = 'none';
+        currentIndex = nextIndex;
+      }, 500);
+    }
+
+    // Rotate notifications every 5 seconds
+    setInterval(rotateNotifications, 5_000);
+  }
+
+  // Function to update phone time and date
+  function updatePhoneTimeAndDate() {
+    const timeElement = document.getElementById('phone-time');
+    const dateElement = document.getElementById('phone-date');
+
+    if (!timeElement || !dateElement) return;
+
+    function update() {
+      const now = new Date();
+
+      // Update time (HH:MM format)
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      timeElement!.textContent = `${hours}:${minutes}`;
+
+      // Update date (Day of week, Month Day format)
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+      const dayOfWeek = days[now.getDay()];
+      const month = months[now.getMonth()];
+      const dayOfMonth = now.getDate();
+
+      dateElement!.textContent = `${dayOfWeek}, ${month} ${dayOfMonth}`;
+    }
+
+    // Update immediately and then every minute
+    update();
+    setInterval(update, 60000);
+  }
+
+  // Initialize when the DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    animateNotifications();
+    updatePhoneTimeAndDate();
+  });
+</script>
