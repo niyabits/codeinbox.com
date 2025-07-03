@@ -1,0 +1,17 @@
+---
+import Container from './Container.astro';
+import Logo from './Logo.astro';
+
+---
+
+<header>
+  <nav>
+    <Container class="relative z-50 flex justify-between py-8">
+      <div class="relative z-10 flex items-center gap-16">
+        <a href="/" aria-label="Home">
+          <Logo class="h-10 w-auto" />
+        </a>
+      </div>
+    </Container>
+  </nav>
+</header>

@@ -1,0 +1,15 @@
+---
+interface Props {
+  class?: string;
+  [key: string]: any;
+}
+
+const { class: className, title = "shell", ...props } = Astro.props;
+---
+
+<div class:list={["flex flex-col", className]} {...props}>
+  <div class="bg-gray-800 text-white p-4 font-mono">{title}</div>
+  <pre class="flex justify-between p-4 bg-gray-700 text-white font-mono whitespace-pre">
+    <code><slot /></code>
+  </pre>
+</div>

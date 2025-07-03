@@ -1,0 +1,295 @@
+---
+import Container from './Container.astro';
+import CodeFrame from './CodeFrame.astro';
+import CircleBackground from './CircleBackground.astro';
+import * as StockLogos from './StockLogos/index.astro';
+import CodeScreen from './CodeScreen.astro';
+
+// Define the features
+const features = [
+  {
+    name: '1. Install the CLI',
+    description:
+      'Install the CodeInbox CLI with Homebrew',
+    app: 'shell',
+    code: '$ brew install codeinbox/homebrew-tap/codeinbox',
+    icon: 'DeviceUserIcon',
+    step: 1,
+  },
+  {
+    name: '2. Login',
+    description:
+      'Login only needs to happen once.',
+    app: 'shell',
+    code: '$ codeinbox login {email}',
+    icon: 'DeviceTouchIcon',
+    step: 2,
+  },
+  {
+    name: '3. Register',
+    description: 'Register the Notification hook in Claude',
+    app: 'claude',
+    code: `enter: /hooks\nselect: Notifications\nselect: Add new hook\npaste: 'codeinbox hook claude notification'`,
+    icon: 'DeviceNotificationIcon',
+    step: 3,
+  },
+];
+
+// Stock data for the stocks screen
+const stocks = [
+  {
+    name: 'Laravel',
+    price: '4,098.01',
+    change: '+4.98%',
+    color: '#F9322C',
+    logo: 'LaravelLogo',
+  },
+  {
+    name: 'Tuple',
+    price: '5,451.10',
+    change: '-3.38%',
+    color: '#5A67D8',
+    logo: 'TupleLogo',
+  },
+  {
+    name: 'Transistor',
+    price: '4,098.41',
+    change: '+6.25%',
+    color: '#2A5B94',
+    logo: 'TransistorLogo',
+  },
+  {
+    name: 'Diageo',
+    price: '250.65',
+    change: '+1.25%',
+    color: '#3320A7',
+    logo: 'DiageoLogo',
+  },
+  {
+    name: 'StaticKit',
+    price: '250.65',
+    change: '-3.38%',
+    color: '#2A3034',
+    logo: 'StaticKitLogo',
+  },
+  {
+    name: 'Statamic',
+    price: '5,040.85',
+    change: '-3.11%',
+    color: '#0EA5E9',
+    logo: 'StatamicLogo',
+  },
+  {
+    name: 'Mirage',
+    price: '140.44',
+    change: '+9.09%',
+    color: '#16A34A',
+    logo: 'MirageLogo',
+  },
+  {
+    name: 'Reversable',
+    price: '550.60',
+    change: '-1.25%',
+    color: '#8D8D8D',
+    logo: 'ReversableLogo',
+  },
+];
+
+// Generate a unique ID for the gradient
+const touchIconGradientId = `device-touch-gradient-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<section
+  id="features"
+  aria-label="Features for investing all your money"
+  class="bg-gray-900 py-20 sm:py-32"
+>
+  <Container>
+    <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl">
+      <h2 class="text-3xl font-medium tracking-tight text-white">
+        How It Works.
+      </h2>
+      <p class="mt-2 text-lg text-gray-400">
+        Get set up in minutes. Start getting Claude notifications where you actually see them.
+      </p>
+    </div>
+  </Container>
+
+  <!-- Mobile version -->
+  <div class="mt-16 md:hidden">
+    <div class="-mb-4 flex snap-x snap-mandatory -space-x-4 overflow-x-auto overscroll-x-contain scroll-smooth pb-4 [scrollbar-width:none] sm:-space-x-6 [&::-webkit-scrollbar]:hidden">
+      {features.map((feature, featureIndex) => (
+        <div class="w-full flex-none snap-center px-4 sm:px-6">
+          <div class="relative transform overflow-hidden rounded-2xl bg-gray-800 px-5 py-6">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <CircleBackground
+                color="#13B5C8"
+                class={featureIndex % 2 === 1 ? 'rotate-180' : undefined}
+              />
+            </div>
+
+            <CodeFrame class="relative mx-auto w-full">
+              <CodeScreen title={feature.app}>
+                {feature.code}
+              </CodeScreen>
+            </CodeFrame>
+
+            <div class="absolute inset-x-0 bottom-0 bg-gray-800/95 p-6 backdrop-blur-sm sm:p-10">
+              <h3 class="mt-6 text-sm font-semibold text-white sm:text-lg">
+                {feature.name}
+              </h3>
+              <p class="mt-2 text-sm text-gray-400">
+                {feature.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mt-6 flex justify-center gap-3">
+      {features.map((_, featureIndex) => (
+        <button
+          type="button"
+          class={`relative h-0.5 w-4 rounded-full ${
+            featureIndex === 0 ? 'bg-gray-300' : 'bg-gray-500'
+          }`}
+          aria-label={`Go to slide ${featureIndex + 1}`}
+          data-slide-index={featureIndex}
+        >
+          <span class="absolute -inset-x-1.5 -inset-y-3"></span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Desktop version -->
+  <Container class="hidden md:mt-20 md:block">
+    <div class="grid grid-cols-12 items-center gap-8 lg:gap-16 xl:gap-24">
+      <div class="relative z-10 order-last col-span-6 space-y-6">
+        {features.map((feature, featureIndex) => (
+          <div
+            class={`relative rounded-2xl transition-colors hover:bg-gray-800/30 ${
+              featureIndex === 0 ? 'bg-gray-800' : ''
+            }`}
+            data-feature-index={featureIndex}
+          >
+            <div class="relative z-10 p-8">
+              <h3 class="mt-6 text-lg font-semibold text-white">
+                <button class="text-left focus:outline-none" data-tab-button={featureIndex}>
+                  <span class="absolute inset-0 rounded-2xl"></span>
+                  {feature.name}
+                </button>
+              </h3>
+              <p class="mt-2 text-sm text-gray-400">
+                {feature.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="relative col-span-6">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <CircleBackground color="#13B5C8" class="animate-spin-slower" />
+        </div>
+        <CodeFrame class="z-10 mx-auto w-full">
+          <div class="feature-screens">
+            {features.map((feature, index) => {
+              return <div class={index === 0 ? 'block' : 'hidden'} data-screen={index + 1}>
+                <CodeScreen title={feature.app}>{feature.code}</CodeScreen>
+              </div>
+            })}
+          </div>
+        </CodeFrame>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<script>
+  // Client-side interactivity for mobile version
+  document.addEventListener('DOMContentLoaded', () => {
+    // Mobile version slide navigation
+    const slideButtons = document.querySelectorAll('[data-slide-index]');
+    const slides = document.querySelectorAll('.snap-center');
+
+    slideButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = parseInt(button.getAttribute('data-slide-index') || '0');
+        slides[index]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+        // Update active button
+        slideButtons.forEach((btn) => {
+          btn.classList.remove('bg-gray-300');
+          btn.classList.add('bg-gray-500');
+        });
+        button.classList.remove('bg-gray-500');
+        button.classList.add('bg-gray-300');
+      });
+    });
+
+    // Handle scroll events to update active button
+    const slideContainer = document.querySelector('.snap-x');
+    if (slideContainer) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+              const index = Array.from(slides).indexOf(entry.target);
+              if (index >= 0) {
+                slideButtons.forEach((btn, i) => {
+                  if (i === index) {
+                    btn.classList.remove('bg-gray-500');
+                    btn.classList.add('bg-gray-300');
+                  } else {
+                    btn.classList.remove('bg-gray-300');
+                    btn.classList.add('bg-gray-500');
+                  }
+                });
+                break;
+              }
+            }
+          }
+        },
+        {
+          root: slideContainer,
+          threshold: 0.6,
+        }
+      );
+
+      slides.forEach((slide) => {
+        observer.observe(slide);
+      });
+    }
+
+    // Desktop version tab functionality
+    const tabButtons = document.querySelectorAll('[data-tab-button]');
+    const featureContainers = document.querySelectorAll('[data-feature-index]');
+    const screens = document.querySelectorAll('[data-screen]');
+
+    tabButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const index = parseInt(button.getAttribute('data-tab-button') || '0');
+
+        // Update active tab
+        featureContainers.forEach((container, i) => {
+          if (i === index) {
+            container.classList.add('bg-gray-800');
+          } else {
+            container.classList.remove('bg-gray-800');
+          }
+        });
+
+        // Update visible screen
+        screens.forEach((screen, i) => {
+          if (i === index) {
+            screen.classList.remove('hidden');
+            screen.classList.add('block');
+          } else {
+            screen.classList.remove('block');
+            screen.classList.add('hidden');
+          }
+        });
+      });
+    });
+  });
+</script>

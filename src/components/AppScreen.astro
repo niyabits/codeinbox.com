@@ -1,0 +1,47 @@
+---
+interface Props {
+  class?: string;
+  [key: string]: any;
+}
+
+const { class: className, ...props } = Astro.props;
+---
+
+<div class:list={["flex flex-col", className]} {...props}>
+  <div class="flex justify-between px-4 pt-4">
+    <!-- MenuIcon -->
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" class="h-6 w-6 flex-none">
+      <path
+        d="M5 6h14M5 18h14M5 12h14"
+        stroke="#fff"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+
+    <!-- Logo -->
+    <svg viewBox="0 0 79 24" fill="none" aria-hidden="true" class="h-6 flex-none">
+      <path
+        d="M12 24C5.373 24 0 18.627 0 12S5.373 0 12 0s12 5.373 12 12-5.373 12-12 12ZM2.4 12a9.004 9.004 0 0 0 6.055 8.507c1.565.542 2.945-.85 2.945-2.507V6c0-1.657-1.38-3.049-2.945-2.507A9.004 9.004 0 0 0 2.4 12Z"
+        fill="#06B6D4"
+      />
+      <path
+        d="M33.004 17V6.818h3.818V17h-3.818Zm-11.57-5.915v-.156l-1.12 1.968-3.195-5.308h-4.301V17h3.818V8.242h.156l2.346 3.861h2.345l2.346-3.861h.156V17h3.818V7.59h-4.3l-3.196 5.308-1.12-1.968v.156h.351Zm-12.043 3.664V11.29H5.97V17H9.39v-2.25h-.001Zm0-5.915V7.589H5.97v1.25h3.42Zm15.812 5.915V11.29h-3.42V17h3.42v-2.25Zm0-5.915V7.589h-3.42v1.25h3.42Zm18.45 5.915c-1.588 0-2.56-.996-2.56-2.533V7.59h3.818v1.25h-2.345v3.077c0 .42.223.694.632.694h1.713V17h-3.258Zm-8.102 0V7.589h3.818V17h-3.818Zm-13.058 0v-1.25h2.346v-6.91h-2.346v-1.25h8.51v1.25h-2.345v6.91h2.345V17h-8.51Z"
+        fill="#fff"
+      />
+    </svg>
+
+    <!-- UserIcon -->
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" class="h-6 w-6 flex-none">
+      <path
+        d="M15 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.696 19h10.608c1.175 0 2.08-.935 1.532-1.897C18.028 15.69 16.187 14 12 14s-6.028 1.689-6.836 3.103C4.616 18.065 5.521 19 6.696 19Z"
+        stroke="#fff"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </div>
+  <slot />
+</div>
