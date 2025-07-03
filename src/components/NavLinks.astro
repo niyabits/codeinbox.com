@@ -1,34 +1,25 @@
 ---
-const navItems = [
-  { label: 'Terms', href: 'https://www.magicbell.com/terms-and-conditions' },
-  { label: 'Privacy', href: 'https://www.magicbell.com/privacy-policy' },
-  { label: 'Cookies', href: 'https://www.magicbell.com/cookie-policy' },
-];
+type NavItem = {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  links: NavItem[];
+}
+
+const links = Astro.props.links;
 ---
 
 <div class="relative flex gap-6">
-  {navItems.map(({ label, href }) => (
+  {links.map(({ label, href }) => (
     <a
       href={href}
       target="_blank"
-      class="nav-link relative -mx-3 -my-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:text-gray-900"
+      class="nav-link relative -mx-3 -my-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:text-gray-900 hover:bg-gray-100"
     >
       <span class="relative z-10">{label}</span>
     </a>
   ))}
 </div>
 
-<script>
-  // Simple hover effect without animation library
-  const links = document.querySelectorAll('.nav-link');
-
-  links.forEach(link => {
-    link.addEventListener('mouseenter', () => {
-      link.classList.add('bg-gray-100');
-    });
-
-    link.addEventListener('mouseleave', () => {
-      link.classList.remove('bg-gray-100');
-    });
-  });
-</script>

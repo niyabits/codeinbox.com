@@ -2,6 +2,12 @@
 import Container from './Container.astro';
 import Logo from './Logo.astro';
 import NavLinks from './NavLinks.astro';
+
+const navItems = [
+  { label: 'Terms', href: 'https://www.magicbell.com/terms-and-conditions' },
+  { label: 'Privacy', href: 'https://www.magicbell.com/privacy-policy' },
+  { label: 'Cookies', href: 'https://www.magicbell.com/cookie-policy' },
+];
 ---
 
 <footer class="border-t border-gray-200">
@@ -16,7 +22,7 @@ import NavLinks from './NavLinks.astro';
           </div>
         </div>
         <nav class="mt-11 flex gap-8">
-          <NavLinks />
+          <NavLinks links={navItems} />
         </nav>
       </div>
     </div>

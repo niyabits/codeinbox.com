@@ -1,6 +1,12 @@
 ---
 import Container from './Container.astro';
-import Logo from './Logo.astro';
+import Logo from './LogoBig.astro';
+import NavLinks from './NavLinks.astro';
+
+const navItems = [
+  { label: 'GitHub', href: 'https://github.com/codeinbox/codeinbox' },
+  { label: 'Support', href: 'https://x.com/intent/post?text=Hi%20%40codeinbox,%20' },
+];
 
 ---
 
@@ -11,7 +17,9 @@ import Logo from './Logo.astro';
         <a href="/" aria-label="Home">
           <Logo class="h-10 w-auto" />
         </a>
+      <NavLinks links={navItems} />
       </div>
+
     </Container>
   </nav>
 </header>
