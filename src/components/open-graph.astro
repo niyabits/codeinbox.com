@@ -28,7 +28,6 @@ interface Props {
   keywords?: string[];
 }
 
-console.log('PUB', PUBLIC_URL);
 const { title, description, keywords = [] } = Astro.props;
 const url = urlJoin(PUBLIC_URL, Astro.url.pathname);
 const image = urlJoin(PUBLIC_URL, '/social.png');
